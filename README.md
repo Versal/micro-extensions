@@ -31,9 +31,7 @@ const richFooHandler = ({ req, res }) => ({ ok: true })
 ```
 
 The reason for this is to counteract the common approach across NodeJS frameworks of mutating the request object as a way for different parts of the application to coordinate (e.g. express session middleware adds a `session` attribute to `req` and expects you to find it by convention in your handler). There's no great problem with this but means your application depends on a "proprietary" `req` object and ultimately leads to indirection that make your application harder to reason about. On the other hand, by accepting a context object, libraries and frameworks can add to the context of the request without having to rely on mutating the `req` object to get work done. E.g. the application config can be made available to all requests:
-
-```js
-const configurableFooHandler = ({ req, res, config: { apiUrl } }) => ({ ok: true, apiUrl })
+```js const configurableFooHandler = ({ req, res, config: { apiUrl } }) => ({ ok: true, apiUrl })
 ```
 
 ### Side effects
@@ -61,6 +59,48 @@ A flexible router for declaratively wiring together rich handlers, effects, midd
 
 * Routers can be combined to create larger applications
 * Helpers make it easy to inject effects and apply middleware to all or a subset of routes
+
+Example
+
+```js
+const fooRouter = createRouter({
+  routes: [
+    { method: 'get', pattern: '/foo', handler: fooHandler, },
+    { method: 'get', pattern: '/fuzz', handler: fuzzHandler, }
+  ],
+  effects: { fooEffect },
+  middlewares: [ fooMiddlware ],
+})
+
+const barRouter = createRouter({
+  routes: [
+    { method: 'get', pattern: '/bar', handler: barHandler, },
+    { method: 'all', pattern: '/*', handler: notFoundHandler, }
+  ],
+  middlewares: [ barMiddlware ],
+})
+
+const router = createRouter({
+  routes: [
+    fooRouter,
+    barRouter
+  ],
+  config: {
+    secret: 'shutup'
+  }
+  effects: {
+    logger,
+    apiClientEffect
+  },
+  middlewares: [
+    logRequests
+  ],
+})
+
+const app = createApp(router)
+
+micro(app).listen(2222)
+```
 
 ### Documentation
 
