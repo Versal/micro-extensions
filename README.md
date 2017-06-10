@@ -81,20 +81,10 @@ const barRouter = createRouter({
 })
 
 const router = createRouter({
-  routes: [
-    fooRouter,
-    barRouter
-  ],
-  config: {
-    secret: 'shutup'
-  }
-  effects: {
-    logger,
-    apiClientEffect
-  },
-  middlewares: [
-    logRequests
-  ],
+  routes: [ fooRouter, barRouter ],
+  config: { secret: 'shutup' }
+  effects: { logger, apiClientEffect },
+  middlewares: [ logRequests ],
 })
 
 const app = createApp(router)
