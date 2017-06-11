@@ -9,8 +9,8 @@ import expect from 'expect'
 const request = axios.create({ maxRedirects: 0, validateStatus: false })
 
 describe('router', () => {
-  describe('createApp', () => {
-    it('creates micro compatible handler from routes', () => {
+  describe('creating app', () => {
+    it('creates micro compatible handler from router', () => {
       const METHODS = [
         'get',
         'post',
@@ -45,7 +45,7 @@ describe('router', () => {
     })
   })
 
-  describe('createRouter', () => {
+  describe('creating router', () => {
     it('injects url param values into handler context', async () => {
       const routes = [
         {
@@ -174,8 +174,8 @@ describe('router', () => {
     })
   })
 
-  describe('mountAt', () => {
-    it('mounts routes at subpath', async () => {
+  describe('mounting', () => {
+    it('mounts routes at sub path', async () => {
       const unmountedRoutes = [
         {
           method: 'get',
