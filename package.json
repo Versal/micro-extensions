@@ -1,7 +1,7 @@
 {
   "name": "micro-extensions",
   "version": "0.0.0",
-  "description": "A small set of extensions for Zeit's Micro Edit",
+  "description": "Tools for building Node.js apps with Zeit's Micro",
   "repository": {
     "type": "git",
     "url": "https://github.com/versal/micro-extensions"

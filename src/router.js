@@ -3,6 +3,8 @@
 import flow from 'lodash/flow'
 import mapValues from 'lodash/mapValues'
 import values from 'lodash/values'
+import isArray from 'lodash/isArray'
+import isObject from 'lodash/isObject'
 import invariant from 'invariant'
 import configurePathMatch from 'path-match'
 import { parse as parseUrl } from 'url'
@@ -14,26 +16,35 @@ const createPathMatcher = configurePathMatch({
   end: false
 })
 
-// TODO write these
-const routesValid = routes => true
-const effectsValid = effects => true
-const middlewaresValid = middlewares => true
-const configValid = config => true
+const isRouteValid = route => 
+const isEffectValid = effect => true
+const isMiddlewareValid = middleware => true
+const isConfigParamValid = configParam => true
+
+const isRoutesValid = routes =>
+  isArray(routes) && routes.every(isRouteValid)
+const isEffectsValid = effects =>
+  isObject(effects) && values(effects).every(isEffectValid)
+const isMiddlewaresValid = middlewares =>
+  isArray(middlewares) && middlewares.every(isMiddlewareValid)
+const isConfigValid = config =>
+  isObject(config) && values(config).every(isConfigParamValid)
 
 // Takes in all the ingredients for a router and outputs a new flattened
 // set of routes that can be passed to `createApp`. This allows easy
 // remixing of routes, effects, middlewares and configs.
-export const createRouter = ({
-  routes = [],
-  effects = {},
-  middlewares = [],
-  config = {}
-}) => {
+export const configureRoutes = (routes, context = {}) => {
+  const {
+    config = {},
+    effects = {},
+    middlewares = []
+  } = context
+
   // TODO write these
-  invariant(routesValid(routes), 'Routes are invalid')
-  invariant(effectsValid(effects), 'Effects are invalid')
-  invariant(middlewaresValid(middlewares), 'Middleware is invalid')
-  invariant(configValid(config), 'Config is invalid')
+  invariant(isRoutesValid(routes), 'Routes are invalid')
+  invariant(isEffectsValid(effects), 'Effects are invalid')
+  invariant(isMiddlewaresValid(middlewares), 'Middleware is invalid')
+  invariant(isConfigValid(config), 'Config is invalid')
 
   // Extract all the route info
   return routes.map(({
