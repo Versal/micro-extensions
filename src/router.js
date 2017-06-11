@@ -152,7 +152,7 @@ export const createApp = routes => {
         // are two ways to know:
         // 1. In micro we'll always get a promise or object when a request is
         //    handled
-        // 2. The reponse has been handled in some other way (e.g. `send()`)
+        // 2. The response has been handled in some other way (e.g. `send()`)
         //    causing `res.headersSent` to be set to true
         if (result || res.headersSent) return result
       }
@@ -161,7 +161,7 @@ export const createApp = routes => {
 }
 
 // Mount a set of routes at a prefixed path
-// TODO add invariant that ensures patternPrefix doesn't have any placeholders
+// TODO add invariant that ensures `patternPrefix` doesn't have any placeholders
 export const mountAt = (patternPrefix, routes) => (
   routes.map(route => ({
     ...route,
