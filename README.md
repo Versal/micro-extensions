@@ -27,11 +27,19 @@ const fooHandler = (req, res) => ({ ok: true })
 After:
 
 ```js
-const richFooHandler = ({ req, res }) => ({ ok: true })
+const richFooHandler = ({ req, res, query }) => ({
+  ok: true,
+  foo: query.foo
+})
 ```
 
 The reason for this is to counteract the common approach across NodeJS frameworks of mutating the request object as a way for different parts of the application to coordinate (e.g. express session middleware adds a `session` attribute to `req` and expects you to find it by convention in your handler). There's no great problem with this but means your application depends on a "proprietary" `req` object and ultimately leads to indirection that make your application harder to reason about. On the other hand, by accepting a context object, libraries and frameworks can add to the context of the request without having to rely on mutating the `req` object to get work done. E.g. the application config can be made available to all requests:
-```js const configurableFooHandler = ({ req, res, config: { apiUrl } }) => ({ ok: true, apiUrl })
+
+```js
+const configurableFooHandler = ({ req, res, config: { apiUrl } }) => ({
+  apiUrl,
+  ok: true
+})
 ```
 
 ### Side effects
