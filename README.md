@@ -44,7 +44,7 @@ const configurableFooHandler = ({ req, res, config: { apiUrl } }) => ({
 
 ### Side effects
 
-[Side effects](https://en.wikipedia.org/wiki/Side_effect_%28computer_science%29) are first class concepts that materialize as helpers called "effects" that are injected into your handlers at runtime. Some common effects are provided out of the box:
+[Side effects](https://en.wikipedia.org/wiki/Side_effect_%28computer_science%29) are first class concepts that materialize as helpers called "effects". Effects are injected into your handlers at runtime providing well defined interfaces over state mutations and other side effects. Some common effects are provided out of the box:
 
 * Logger
 * Session
@@ -63,7 +63,7 @@ Helpers for loading and validating application configurations.
 
 ### Router
 
-A flexible router for declaratively wiring together rich handlers, effects, middleware and configs into applications.
+A flexible router for declaratively composing rich handlers, effects, middleware and configs into applications.
 
 * Routers can be combined to create larger applications
 * Helpers make it easy to inject effects and apply middleware to all or a subset of routes
