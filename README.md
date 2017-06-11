@@ -63,32 +63,38 @@ A flexible router for declaratively wiring together rich handlers, effects, midd
 Example
 
 ```js
+// A router
 const fooRouter = createRouter({
   routes: [
-    { method: 'get', pattern: '/foo', handler: fooHandler, },
-    { method: 'get', pattern: '/fuzz', handler: fuzzHandler, }
+    { method: 'get', pattern: '/foo', handler: fooHandler },
+    { method: 'get', pattern: '/foo/fuzz', handler: fuzzHandler }
   ],
   effects: { fooEffect },
-  middlewares: [ fooMiddlware ],
+  middlewares: [ fooMiddlware ]
 })
 
+// Another router
 const barRouter = createRouter({
-  routes: [
-    { method: 'get', pattern: '/bar', handler: barHandler, },
-    { method: 'all', pattern: '/*', handler: notFoundHandler, }
-  ],
+  routes: [ { method: 'get', pattern: '/bar', handler: barHandler } ],
   middlewares: [ barMiddlware ],
 })
 
+// Combining routers
 const router = createRouter({
-  routes: [ fooRouter, barRouter ],
-  config: { secret: 'shutup' }
-  effects: { logger, apiClientEffect },
-  middlewares: [ logRequests ],
+  routes: [
+    ...fooRouter,
+    ...mountAt('/private', barRouter),
+    fallbackRoute
+  ],
+  config: { secret: 'shutup' },
+  effects: { logger: loggerEffect, apiClient: apiClientEffect },
+  middlewares: [ logRequestsMiddleware ]
 })
 
+// Creating app
 const app = createApp(router)
 
+// Running app
 micro(app).listen(2222)
 ```
 
