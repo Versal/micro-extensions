@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 
-import { createRouter, createApp, mountAt } from '../router'
+import { configureRoutes, createApp, mountAt } from '../router'
 import micro from 'micro'
 import listen from 'test-listen'
 import axios from 'axios'
@@ -29,8 +29,8 @@ describe('router', () => {
 
       for (const method of METHODS) {
         it(`handles ${method} requests`, async () => {
-          const router = createRouter({ routes })
-          const app = createApp(router)
+          const appRoutes = configureRoutes(routes)
+          const app = createApp(appRoutes)
 
           const url = await listen(micro(app))
           const response = await request[method](url + '/foo')
@@ -54,8 +54,8 @@ describe('router', () => {
           handler: ({ params: { typeOfFoo } }) => ({ ok: true, typeOfFoo })
         }
       ]
-      const router = createRouter({ routes })
-      const app = createApp(router)
+      const appRoutes = configureRoutes(routes)
+      const app = createApp(appRoutes)
       const url = await listen(micro(app))
       const response = await request.get(url + '/foo/bar')
 
@@ -72,8 +72,8 @@ describe('router', () => {
           handler: ({ query: { typeOfBar } }) => ({ ok: true, typeOfBar })
         }
       ]
-      const router = createRouter({ routes })
-      const app = createApp(router)
+      const appRoutes = configureRoutes(routes)
+      const app = createApp(appRoutes)
       const url = await listen(micro(app))
       const response = await request.get(url + '/foo?typeOfBar=baz')
 
@@ -90,8 +90,8 @@ describe('router', () => {
           handler: ({ pathname }) => ({ ok: true, pathname })
         }
       ]
-      const router = createRouter({ routes })
-      const app = createApp(router)
+      const appRoutes = configureRoutes(routes)
+      const app = createApp(appRoutes)
       const url = await listen(micro(app))
       const response = await request.get(url + '/baz')
 
@@ -108,8 +108,8 @@ describe('router', () => {
           handler: ({ config: { foo } }) => ({ ok: true, foo })
         }
       ]
-      const router = createRouter({ routes, config: { foo: 'bar' } })
-      const app = createApp(router)
+      const appRoutes = configureRoutes(routes, { config: { foo: 'bar' } })
+      const app = createApp(appRoutes)
       const url = await listen(micro(app))
       const response = await request.get(url)
 
@@ -134,12 +134,11 @@ describe('router', () => {
           }
         }
       ]
-      const router = createRouter({
-        routes,
+      const appRoutes = configureRoutes(routes, {
         config: { foo: 'bax' },
         effects: { fooEffect }
       })
-      const app = createApp(router)
+      const app = createApp(appRoutes)
 
       const url = await listen(micro(app))
       const response = await request.get(url)
@@ -163,8 +162,8 @@ describe('router', () => {
           })
         }
       ]
-      const router = createRouter({ routes, effects: { bazEffect } })
-      const app = createApp(router)
+      const appRoutes = configureRoutes(routes, { effects: { bazEffect } })
+      const app = createApp(appRoutes)
       const url = await listen(micro(app))
       const response = await request.get(url, { headers: { baz: 'boo' } })
 
@@ -190,13 +189,11 @@ describe('router', () => {
           handler: () => ({ ok: true, mounted: true })
         }
       ])
-      const router = createRouter({
-        routes: [
-          ...unmountedRoutes,
-          ...mountedRoutes
-        ]
-      })
-      const app = createApp(router)
+      const appRoutes = configureRoutes([
+        ...unmountedRoutes,
+        ...mountedRoutes
+      ])
+      const app = createApp(appRoutes)
       const url = await listen(micro(app))
 
       const unmountedResponse = await request.get(url + '/unmounted')

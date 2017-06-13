@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 
-import { createRouter, createApp } from '../router'
+import { configureRoutes, createApp } from '../router'
 import micro from 'micro'
 import listen from 'test-listen'
 import request from 'axios'
@@ -32,8 +32,8 @@ const main = async () => {
     handler: ({ req, res, ...context }) => ({ ok: true, pattern, ...context })
   }))
 
-  const router = createRouter({ routes, fooContext: true })
-  const app = createApp(router)
+  const appRoutes = configureRoutes(routes, { fooContext: true })
+  const app = createApp(appRoutes)
   const url = await listen(micro(app))
 
   const count = 500
