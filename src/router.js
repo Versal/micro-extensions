@@ -16,7 +16,7 @@ const createPathMatcher = configurePathMatch({
   end: false
 })
 
-const isRouteValid = route => 
+const isRouteValid = route => true
 const isEffectValid = effect => true
 const isMiddlewareValid = middleware => true
 const isConfigParamValid = configParam => true
