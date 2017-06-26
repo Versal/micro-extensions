@@ -16,9 +16,9 @@
   ],
   "homepage": "https://github.com/versal/micro-extensions",
   "scripts": {
-    "dev": "babel src -d lib --watch",
-    "build": "babel src -d lib",
-    "prepublish": "babel src -d lib",
+    "dev": "rimraf lib && babel src -d lib --watch",
+    "build": "rimraf lib && babel src -d lib",
+    "prepublish": "rimraf lib && babel src -d lib",
     "lint": "standard",
     "test": "mocha --compilers js:babel-core/register 'src/**/__tests__/*.js'",
     "profile": "babel-node profile",
@@ -27,26 +27,34 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "micro": "^7.3.3",
-    "path-match": "^1.2.4"
+    "connect-memcached": "^0.2.0",
+    "cookie": "^0.3.1",
+    "express-session": "^1.15.3",
+    "path-match": "^1.2.4",
+    "urlencoded-body-parser": "^2.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "expect": "^1.20.2",
+    "micro": "^7.3.3",
     "mocha": "^3.4.2",
+    "rimraf": "^2.6.1",
+    "sinon": "^2.3.5",
     "standard": "^10.0.2",
     "test-listen": "^1.0.2"
   },
   "peerDependencies": {
-    "micro": "^7.3.3"
+    "micro": ">=7"
   },
   "babel": {
     "presets": [
       "latest",
-      "stage-0"
+      "stage-0",
+      "react"
     ]
   },
   "standard": {
