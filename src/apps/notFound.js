@@ -1,5 +1,5 @@
 import { createError } from 'micro'
-import { configureRoutes } from '../../router'
+import { configureRoutes } from '../router'
 
 const notFound = configureRoutes([{
   method: 'all',

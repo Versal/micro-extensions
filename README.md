@@ -17,6 +17,8 @@ Micro extensions also extend Micro, which is very unopinionated, with one import
 ## App example
 
 ```js
+import { configureRoutes } from 'micro-extensions/lib'
+
 const routes = configureRoutes({
   routes: [
     { method: 'get', pattern: '/foo', handler: fooHandler },
