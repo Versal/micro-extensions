@@ -1,6 +1,6 @@
 {
   "name": "micro-extensions",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Tools for building Node.js apps with Zeit's Micro",
   "repository": {
     "type": "git",
