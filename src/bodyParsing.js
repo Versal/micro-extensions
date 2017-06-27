@@ -8,33 +8,26 @@ than once. This module imports and re-exports useful body parsing helpers after
 wrapping them in a caching mechanism.
 */
 
-const json = async req => {
+export const json = async req => {
   if (req.__microExtensionBodyJson) return req.__microExtensionBodyJson
   req.__microExtensionBodyJson = await micro.json(req)
   return req.__microExtensionBodyJson
 }
 
-const buffer = async req => {
+export const buffer = async req => {
   if (req.__microExtensionBodyBuffer) return req.__microExtensionBodyBuffer
   req.__microExtensionBodyBuffer = await micro.buffer(req)
   return req.__microExtensionBodyBuffer
 }
 
-const text = async req => {
+export const text = async req => {
   if (req.__microExtensionBodyText) return req.__microExtensionBodyText
   req.__microExtensionBodyText = await micro.text(req)
   return req.__microExtensionBodyText
 }
 
-const urlencoded = async req => {
+export const urlencoded = async req => {
   if (req.__microExtensionBodyUrlencoded) return req.__microExtensionBodyUrlencoded
   req.__microExtensionBodyUrlencoded = await urlencodedBodyParser(req)
   return req.__microExtensionBodyUrlencoded
-}
-
-export {
-  json,
-  buffer,
-  text,
-  urlencoded
 }
