@@ -58,6 +58,8 @@ export const loadConfigFromPath = (schema, configPath) => {
     process.exit(1)
   }
 
+  console.info(`Loading config from '${configPath}'`)
+
   const config = readJsonSync(configPath)
   return loadConfig(schema, config)
 }
