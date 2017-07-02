@@ -10,7 +10,7 @@ const request = axios.create({ maxRedirects: 0, validateStatus: false })
 
 describe('router', () => {
   describe('creating app', () => {
-    it('creates micro compatible handler from router', () => {
+    describe('creates micro compatible handler from router', () => {
       const METHODS = [
         'get',
         'post',
