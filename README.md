@@ -56,8 +56,8 @@ Request handlers accept a context object containing the familiar `req` and `res`
 [Side-effects](https://en.wikipedia.org/wiki/Side_effect_%28computer_science%29) are first class concepts that materialize in Micro extensions as helpers called "effects". Effects are injected into request handlers at runtime providing well defined interfaces over state mutations and other side-effects, e.g.:
 
 ```js
-const fooHandler = async ({ req, res, effect: apiClient }) => {
-  return await apiClient('https://api.foo.com/foos')
+const createFooHandler = async ({ req, res, effects: { apiClient } }) => {
+  return await apiClient.post('https://api.foo.com/foos', { bar: true })
 }
 ```
 
