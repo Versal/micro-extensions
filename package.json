@@ -16,13 +16,14 @@
   ],
   "homepage": "https://github.com/versal/micro-extensions",
   "scripts": {
-    "dev": "rimraf lib && babel src -d lib --watch",
+    "dev": "yarn build:watch & yarn test:watch",
     "build": "rimraf lib && babel src -d lib",
+    "build:watch": "rimraf lib && babel src -d lib --watch",
+    "test": "mocha --compilers js:babel-core/register 'src/**/__tests__/*.js'",
+    "test:watch": "mocha --watch --compilers js:babel-core/register 'src/**/__tests__/*.js'",
     "prepublish": "rimraf lib && babel src -d lib",
     "lint": "standard",
-    "test": "mocha --compilers js:babel-core/register 'src/**/__tests__/*.js'",
     "profile": "babel-node profile",
-    "test:watch": "mocha --watch --compilers js:babel-core/register 'src/**/__tests__/*.js'",
     "pretest": "standard"
   },
   "dependencies": {
