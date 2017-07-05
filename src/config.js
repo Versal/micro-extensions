@@ -54,8 +54,9 @@ export const loadConfig = (schema, config) => {
 
 export const loadConfigFromPath = (schema, configPath) => {
   if (!existsSync(configPath)) {
-    console.error(`Config file does not exist: ${configPath}`)
-    process.exit(1)
+    console.warn(`WARN: config file does not exist: ${configPath}`)
+    console.warn(`WARN: returning empty config for app`)
+    return {}
   }
 
   console.info(`Loading config from '${configPath}'`)
