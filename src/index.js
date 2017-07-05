@@ -23,3 +23,5 @@ export {
   loadConfig,
   loadConfigFromPath
 } from './config'
+
+export configureSession from './modules/configureSession'
