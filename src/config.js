@@ -34,19 +34,11 @@ const applyDefaultsFromSchema = (schema, config) => {
   return { ...defaults, ...config }
 }
 
-const showErrors = errors => {
-  console.error('Config is not valid:')
-  errors.forEach(error => console.error(' - ' + error))
-}
-
-const killProcess = () => process.exit(1)
-
 export const loadConfig = (schema, config) => {
   const configWithDefaults = applyDefaultsFromSchema(schema, config)
   const errors = validateConfig(schema, configWithDefaults)
   if (errors) {
-    showErrors(errors)
-    killProcess()
+    throw new Error(`Config is not valid: [${errors.join(', ')}]`)
   }
 
   return configWithDefaults
@@ -54,8 +46,7 @@ export const loadConfig = (schema, config) => {
 
 export const loadConfigFromPath = (schema, configPath) => {
   if (!existsSync(configPath)) {
-    console.error(`Config file does not exist: ${configPath}`)
-    process.exit(1)
+    throw new Error(`Config file does not exist: ${configPath}`)
   }
 
   console.info(`Loading config from '${configPath}'`)
