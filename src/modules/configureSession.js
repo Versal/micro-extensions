@@ -24,22 +24,23 @@ const getSessionFacade = req => ({
 })
 
 const configureSession = ({
-  sessionNamespace,
+  sessionName,
+  sessionStorePrefix,
   sessionCacheUri,
   sessionSecret,
   sessionExpiresMs
 }) => {
   let store
-  if (sessionNamespace && sessionCacheUri) {
+  if (sessionCacheUri) {
     store = new MemcachedStore({
-      prefix: `${sessionNamespace}-session-`,
+      prefix: sessionStorePrefix,
       host: sessionCacheUri
     })
   }
 
   const middleware = session({
     store,
-    name: `versal-${sessionNamespace}`,
+    name: sessionName,
     secret: sessionSecret,
     resave: false,
     saveUninitialized: true,
