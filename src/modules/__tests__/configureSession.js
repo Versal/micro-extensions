@@ -16,7 +16,7 @@ const request = axios.create({
 })
 
 const createSession = configureSession({
-  sessionNamespace: 'test',
+  sessionName: 'versal-test',
   sessionSecret: 'tset',
   sessionExpiresMs: 1000
 })
