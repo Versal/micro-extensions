@@ -34,7 +34,7 @@ const configureSession = ({
   if (sessionCacheUri) {
     store = new MemcachedStore({
       prefix: sessionStorePrefix,
-      host: sessionCacheUri
+      hosts: sessionCacheUri
     })
   }
 
