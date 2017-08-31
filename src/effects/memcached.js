@@ -1,10 +1,12 @@
 import Memcached from 'memcached-promisify'
 
 const memcached = ({
+  memcachedHost,
   memcachedHosts,
   memcachedOptions
 }) => {
-  const memcached = new Memcached(memcachedHosts, memcachedOptions)
+  const host = memcachedHost || memcachedHosts
+  const memcached = new Memcached(host, memcachedOptions)
   return () => memcached
 }
 
