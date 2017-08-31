@@ -1,3 +1,9 @@
+### 0.1.8 (crafted 08/31/17)
+
+Changes:
+
+  * (Mike Bannister) Memcached effect (#18)
+
 ### 0.1.7 (crafted 08/03/17)
 
 Changes:
