@@ -33,6 +33,7 @@
     "cookie": "^0.3.1",
     "express-session": "^1.15.3",
     "fs-extra": "^3.0.1",
+    "memcached-promisify": "^2.0.0",
     "path-match": "^1.2.4",
     "proxy-addr": "^1.1.4",
     "urlencoded-body-parser": "^2.0.1"
