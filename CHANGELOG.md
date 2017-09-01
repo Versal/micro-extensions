@@ -1,3 +1,10 @@
+### 0.1.9 (crafted 08/31/17)
+
+Changes:
+
+  * (Mike Bannister) Suppress console.error test helper (#20)
+  * (Mike Bannister) Fix missing dependency (#21)
+
 ### 0.1.8 (crafted 08/31/17)
 
 Changes:
