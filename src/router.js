@@ -107,8 +107,9 @@ const configureEffects = (config, effects) =>
 
 // A helper for applying effect creators. The main point here is each effect
 // needs a context object but the processing might be asynchronous.
-const createEffects = async (context, creators) => {
-  const effectsCreating = mapValues(creators, creator => creator(context))
+const createEffects = async context => {
+  const { effectCreators } = context
+  const effectsCreating = mapValues(effectCreators, creator => creator(context))
   await Promise.all(values(effectsCreating))
   const effectsCreated = await mapResolvedPromiseValues(effectsCreating)
 
@@ -147,13 +148,16 @@ export const createApp = routes => {
         // Accumulate more context
         const routeContext = {
           config,
+          // Pass the creators in so that effects can initialize
+          // other effects
+          effectCreators,
           ...urlContext,
           ...requestContext
         }
 
         // Each effect gets access to the full route context
         const effects =
-          await createEffects(routeContext, effectCreators)
+          await createEffects(routeContext)
 
         // Handle request with "extended request handler" by handing it
         // the full route context
