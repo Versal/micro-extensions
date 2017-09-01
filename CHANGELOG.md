@@ -1,3 +1,9 @@
+### 0.1.10 (crafted 08/31/17)
+
+Changes:
+
+  * (Mike Bannister) Fix required config values (#22)
+
 ### 0.1.9 (crafted 08/31/17)
 
 Changes:
