@@ -5,20 +5,22 @@ const jsonSchema = new JsonSchema({ allErrors: true })
 
 const validateConfig = (schema, config) => {
   let errors = []
-  schema.forEach(({ name, schema }) => {
+  schema.forEach(({ name, schema, required }) => {
     const val = config[name]
-    if (val === undefined) {
-      errors = [...errors, `'${name}' is required`]
-    } else {
+    if (val !== undefined) {
       const isValid = jsonSchema.validate(schema, val)
       if (!isValid) {
         const { errors: validationErrors } = jsonSchema
-        validationErrors.forEach(
+        // Since we have error print them and return
+        // to continue
+        return validationErrors.forEach(
           ({ message }) => {
             errors = [...errors, `'${name}' ${message}`]
           }
         )
       }
+    } else if (required) {
+      errors = [...errors, `'${name}' is required`]
     }
   })
 
