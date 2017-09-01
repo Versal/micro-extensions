@@ -230,6 +230,15 @@ const configurableFooHandler = ({
   ok: true
 })
 ```
+
+### Test helpers
+
+##### API
+
+###### `suppressConsoleError()`
+
+Adds a `beforeEach` and `afterEach` to suppress all calls to `console.error` during test run. Used to quiet Micro tests that invoke `sendError`.
+
 ### Plugins
 
 There's no specific documentation for plugins because to create one you simply export a call to `configureRoutes` from a module.
