@@ -27,6 +27,7 @@
     "pretest": "standard"
   },
   "dependencies": {
+    "ajv": "^5.2.2",
     "axios": "^0.16.2",
     "bunyan": "^1.8.10",
     "connect-memcached": "^0.2.0",
