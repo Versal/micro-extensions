@@ -118,7 +118,7 @@ describe('router', () => {
       expect(response.data.foo).toEqual('bar')
     })
 
-    it('configures side effects helpers with access to the config object', async () => {
+    it('configures side effects helpers with access to the `config` object', async () => {
       const fooEffect = config => context => {
         return { get: () => Promise.resolve(context.config.foo) }
       }
@@ -137,6 +137,41 @@ describe('router', () => {
       const appRoutes = configureRoutes(routes, {
         config: { foo: 'bax' },
         effects: { fooEffect }
+      })
+      const app = createApp(appRoutes)
+
+      const url = await listen(micro(app))
+      const response = await request.get(url)
+
+      expect(response.status).toEqual(200)
+      expect(response.data.ok).toBeTruthy()
+      expect(response.data.foo).toEqual('bax')
+    })
+
+    it('configures side effects helpers with access to the `effectCreators` object', async () => {
+      const fooEffect = config => context => {
+        return { get: () => Promise.resolve(context.config.foo) }
+      }
+      const barEffect = config => context => {
+        const { effectCreators: { fooEffect: createFooEffect } } = context
+        const fooEffect = createFooEffect(context)
+        return { get: () => fooEffect.get() }
+      }
+      const routes = [
+        {
+          method: 'get',
+          pattern: '/',
+          handler: async ({ effects: { barEffect } }) => {
+            return {
+              ok: true,
+              foo: await barEffect.get()
+            }
+          }
+        }
+      ]
+      const appRoutes = configureRoutes(routes, {
+        config: { foo: 'bax' },
+        effects: { fooEffect, barEffect }
       })
       const app = createApp(appRoutes)
 
