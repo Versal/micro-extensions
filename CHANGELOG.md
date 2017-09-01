@@ -1,3 +1,9 @@
+### 0.1.11 (crafted 09/01/17)
+
+Changes:
+
+  * (Mike Bannister) Fix effects in effects (#23)
+
 ### 0.1.10 (crafted 08/31/17)
 
 Changes:
