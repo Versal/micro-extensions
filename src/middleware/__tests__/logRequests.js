@@ -7,6 +7,7 @@ import micro, { send } from 'micro'
 import listen from 'test-listen'
 import logRequests from '../logRequests'
 import { createApp, configureRoutes } from '../../router'
+import { suppressConsoleError } from '../../test'
 import { IncomingMessage, ServerResponse } from 'http'
 
 const request = axios.create({ maxRedirects: 0, validateStatus: false })
@@ -18,6 +19,8 @@ const runServer = (routes, effects) => {
 }
 
 describe('logRequests', () => {
+  suppressConsoleError()
+
   it('logs success', async () => {
     const fakeLogger = { debug: spy() }
     const loggerEffect = () => () => fakeLogger

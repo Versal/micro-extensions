@@ -1,0 +1,1 @@
+export suppressConsoleError from './suppressConsoleError'
